@@ -2,38 +2,38 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
-<title>横向无限轮播</title>
+<title>横向两张自动轮播</title>
 <style>
 body {
   margin: 0;
   padding: 0;
 }
 .carousel-container {
-  width: 320px;          /* 容器宽度 = 两张图片宽度总和 */
-  overflow: hidden;       /* 隐藏超出部分 */
+  width: 320px;          /* 容器宽度 = 两张图片总宽度 */
+  overflow: hidden;
   margin: 0 auto;
 }
 
 .carousel-track {
   display: flex;
   width: max-content;
-  animation: scroll 6s linear infinite;
+  animation: scroll 8s linear infinite;  /* 修改速度为8秒 */
 }
 
 .carousel-slide {
   min-width: 160px;       /* 每张图片宽度 */
   flex-shrink: 0;
+  margin-right: 0;
 }
 
 img {
   width: 100%;
   display: block;
+  border-radius: 12px; /* 圆角效果，可调整 */
 }
-
-/* 无限平滑滚动动画 */
 @keyframes scroll {
   0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); } /* 移动一半长度后重复 */
+  100% { transform: translateX(-50%); } /* 移动一半长度，实现平滑循环 */
 }
 </style>
 </head>
