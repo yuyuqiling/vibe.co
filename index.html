@@ -2,29 +2,38 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
-<title>横向两张自动轮播</title>
+<title>横向无限轮播</title>
 <style>
-body { margin: 0; padding: 0; }
+body {
+  margin: 0;
+  padding: 0;
+}
 .carousel-container {
-  width: 320px;           /* 可根据需要修改 */
-  overflow: hidden;        /* 隐藏多余图片 */
+  width: 320px;          /* 容器宽度 = 两张图片宽度总和 */
+  overflow: hidden;       /* 隐藏超出部分 */
   margin: 0 auto;
-  border: none;            /* 去掉边线 */
 }
 
 .carousel-track {
   display: flex;
-  transition: transform 0.5s ease-in-out;
+  width: max-content;
+  animation: scroll 6s linear infinite;
 }
 
 .carousel-slide {
-  min-width: 160px;        /* 每张图片占容器一半宽度，两张并排 */
-  margin-right: 0;          /* 图片间距，可调 */
+  min-width: 160px;       /* 每张图片宽度 */
+  flex-shrink: 0;
 }
 
 img {
   width: 100%;
   display: block;
+}
+
+/* 无限平滑滚动动画 */
+@keyframes scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } /* 移动一半长度后重复 */
 }
 </style>
 </head>
@@ -32,34 +41,58 @@ img {
 
 <div class="carousel-container">
   <div class="carousel-track" id="carouselTrack">
-    <div class="carousel-slide"><img src="images/image1.svg" alt=""></div>
-    <div class="carousel-slide"><img src="images/image2.svg" alt=""></div>
-    <div class="carousel-slide"><img src="images/image3.svg" alt=""></div>
-    <div class="carousel-slide"><img src="images/image4.svg" alt=""></div>
-    <div class="carousel-slide"><img src="images/image5.svg" alt=""></div>
-    <div class="carousel-slide"><img src="images/image6.svg" alt=""></div>
+    <!-- 图片列表 -->
+    <div class="carousel-slide"><img src="images/图片10.png" alt=""></div>
+    <div class="carousel-slide"><img src="images/图片11.png" alt=""></div>
+    <div class="carousel-slide"><img src="images/图片12.png" alt=""></div>
+    <div class="carousel-slide"><img src="images/图片13.png" alt=""></div>
+    <div class="carousel-slide"><img src="images/图片14.png" alt=""></div>
+    <div class="carousel-slide"><img src="images/图片15.png" alt=""></div>
+     <div class="carousel-slide"><img src="images/图片16.png" alt=""></div>
+     <div class="carousel-slide"><img src="images/图片17.png" alt=""></div>
+     <div class="carousel-slide"><img src="images/图片18.png" alt=""></div>
+     <div class="carousel-slide"><img src="images/图片19.png" alt=""></div>
+     <div class="carousel-slide"><img src="images/图片20.png" alt=""></div>
+     <div class="carousel-slide"><img src="images/图片21.png" alt=""></div>
+     <div class="carousel-slide"><img src="images/图片22.png" alt=""></div>
+     <div class="carousel-slide"><img src="images/图片23.png" alt=""></div>
+     <div class="carousel-slide"><img src="images/图片24.png" alt=""></div>
+    <div class="carousel-slide"><img src="images/图片25.png" alt=""></div>
+    <div class="carousel-slide"><img src="images/图片26.png" alt=""></div>
+    <div class="carousel-slide"><img src="images/图片27.png" alt=""></div>
+    <div class="carousel-slide"><img src="images/图片28.png" alt=""></div>
+    <div class="carousel-slide"><img src="images/图片29.png" alt=""></div>
+    <div class="carousel-slide"><img src="images/图片30.png" alt=""></div>
+    <div class="carousel-slide"><img src="images/图片31.png" alt=""></div>
+    <div class="carousel-slide"><img src="images/图片32.png" alt=""></div>
+    
+
+    <!-- 克隆一份用于平滑循环 -->
+    <div class="carousel-slide"><img src="images/图片10.png" alt=""></div>
+    <div class="carousel-slide"><img src="images/图片11.png" alt=""></div>
+    <div class="carousel-slide"><img src="images/图片12.png" alt=""></div>
+    <div class="carousel-slide"><img src="images/图片13.png" alt=""></div>
+    <div class="carousel-slide"><img src="images/图片14.png" alt=""></div>
+    <div class="carousel-slide"><img src="images/图片15.png" alt=""></div>
+     <div class="carousel-slide"><img src="images/图片16.png" alt=""></div>
+     <div class="carousel-slide"><img src="images/图片17.png" alt=""></div>
+     <div class="carousel-slide"><img src="images/图片18.png" alt=""></div>
+     <div class="carousel-slide"><img src="images/图片19.png" alt=""></div>
+     <div class="carousel-slide"><img src="images/图片20.png" alt=""></div>
+     <div class="carousel-slide"><img src="images/图片21.png" alt=""></div>
+     <div class="carousel-slide"><img src="images/图片22.png" alt=""></div>
+     <div class="carousel-slide"><img src="images/图片23.png" alt=""></div>
+     <div class="carousel-slide"><img src="images/图片24.png" alt=""></div>
+    <div class="carousel-slide"><img src="images/图片25.png" alt=""></div>
+    <div class="carousel-slide"><img src="images/图片26.png" alt=""></div>
+    <div class="carousel-slide"><img src="images/图片27.png" alt=""></div>
+    <div class="carousel-slide"><img src="images/图片28.png" alt=""></div>
+    <div class="carousel-slide"><img src="images/图片29.png" alt=""></div>
+    <div class="carousel-slide"><img src="images/图片30.png" alt=""></div>
+    <div class="carousel-slide"><img src="images/图片31.png" alt=""></div>
+    <div class="carousel-slide"><img src="images/图片32.png" alt=""></div>
   </div>
 </div>
-
-<script>
-const track = document.getElementById('carouselTrack');
-const slides = track.children;
-const slideCount = slides.length;
-const slideWidth = slides[0].offsetWidth;
-let index = 0;
-
-// 自动轮播函数
-function moveCarousel() {
-  index++;
-  if (index > slideCount - 2) {  // 显示两张图片
-    index = 0;
-  }
-  track.style.transform = `translateX(-${index * slideWidth}px)`;
-}
-
-// 每3秒轮播一次
-setInterval(moveCarousel, 3000);
-</script>
 
 </body>
 </html>
