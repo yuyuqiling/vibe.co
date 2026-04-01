@@ -2,26 +2,21 @@
 <html lang="zh">
 <head>
 <meta charset="UTF-8">
-<title>自动轮播</title>
+<title>横向两张自动轮播</title>
 <style>
-body {
-  margin: 0;
-  padding: 0;
-}
+body { margin: 0; padding: 0; }
 .carousel-container {
-  width: 320px;          /* 容器宽度 = 两张图片总宽 */
+  width: 320px;           /* 容器宽度 = 两张图片宽度之和 */
   overflow: hidden;
   margin: 0 auto;
 }
 
 .carousel-track {
   display: flex;
-  width: max-content;
-  animation: scroll 8s linear infinite;  /* 速度8秒 */
 }
 
 .carousel-slide {
-  min-width: 160px;       /* 每张图片宽度 = 容器宽度 / 2 */
+  min-width: 160px;       /* 每张图片宽度 */
   flex-shrink: 0;
   margin-right: 0;
 }
@@ -29,19 +24,13 @@ body {
 img {
   width: 100%;
   display: block;
-  border-radius: 12px;   /* 圆角，可调 */
-}
-
-/* 无限平滑滚动动画 */
-@keyframes scroll {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); } /* 移动一半长度后重复 */
+  border-radius: 12px;    /* 圆角效果，可调 */
 }
 </style>
 </head>
 <body>
 
-<div class="carousel-container">
+<div class="carousel-container" id="carouselContainer">
   <div class="carousel-track" id="carouselTrack">
     <!-- 图片列表 -->
     <div class="carousel-slide"><img src="images/图片10.png" alt=""></div>
@@ -67,34 +56,33 @@ img {
     <div class="carousel-slide"><img src="images/图片30.png" alt=""></div>
     <div class="carousel-slide"><img src="images/图片31.png" alt=""></div>
     <div class="carousel-slide"><img src="images/图片32.png" alt=""></div>
-    
 
-    <!-- 克隆一份用于平滑循环 -->
-    <div class="carousel-slide"><img src="images/图片10.png" alt=""></div>
-    <div class="carousel-slide"><img src="images/图片11.png" alt=""></div>
-    <div class="carousel-slide"><img src="images/图片12.png" alt=""></div>
-    <div class="carousel-slide"><img src="images/图片13.png" alt=""></div>
-    <div class="carousel-slide"><img src="images/图片14.png" alt=""></div>
-    <div class="carousel-slide"><img src="images/图片15.png" alt=""></div>
-     <div class="carousel-slide"><img src="images/图片16.png" alt=""></div>
-     <div class="carousel-slide"><img src="images/图片17.png" alt=""></div>
-     <div class="carousel-slide"><img src="images/图片18.png" alt=""></div>
-     <div class="carousel-slide"><img src="images/图片19.png" alt=""></div>
-     <div class="carousel-slide"><img src="images/图片20.png" alt=""></div>
-     <div class="carousel-slide"><img src="images/图片21.png" alt=""></div>
-     <div class="carousel-slide"><img src="images/图片22.png" alt=""></div>
-     <div class="carousel-slide"><img src="images/图片23.png" alt=""></div>
-     <div class="carousel-slide"><img src="images/图片24.png" alt=""></div>
-    <div class="carousel-slide"><img src="images/图片25.png" alt=""></div>
-    <div class="carousel-slide"><img src="images/图片26.png" alt=""></div>
-    <div class="carousel-slide"><img src="images/图片27.png" alt=""></div>
-    <div class="carousel-slide"><img src="images/图片28.png" alt=""></div>
-    <div class="carousel-slide"><img src="images/图片29.png" alt=""></div>
-    <div class="carousel-slide"><img src="images/图片30.png" alt=""></div>
-    <div class="carousel-slide"><img src="images/图片31.png" alt=""></div>
-    <div class="carousel-slide"><img src="images/图片32.png" alt=""></div>
   </div>
 </div>
+<script>
+const container = document.getElementById('carouselContainer');
+const track = document.getElementById('carouselTrack');
+const slides = Array.from(track.children);
+
+// 克隆所有图片，实现无限循环
+slides.forEach(slide => {
+  const clone = slide.cloneNode(true);
+  track.appendChild(clone);
+});
+
+let scrollSpeed = 0.5; // 每帧滚动像素，可调整
+function animate() {
+  container.scrollLeft += scrollSpeed;
+  // 当滚动到原始图片长度时，重置 scrollLeft，实现无缝循环
+  if(container.scrollLeft >= track.scrollWidth / 2){
+    container.scrollLeft = 0;
+  }
+  requestAnimationFrame(animate);
+}
+
+// 启动动画
+animate();
+</script>
 
 </body>
 </html>
